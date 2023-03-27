@@ -29,7 +29,7 @@
 ##############################################
 
 
-## Normalisation.sh : Bash scipt for normalising 
+## ScalenNormalise.sh : Bash scipt for normalising 
 ## This script requires a file with total counts across all chromosomes ( total counts - iPCR and cDNA ), 
 ## column name of the cDNA samples, column name of the iPCR sample, column name of the SNP position field,
 ## and a tab seperated file with all the columns specified above.
