@@ -2,6 +2,24 @@
 # AUTHOR / DATE
 # Vartika Bisht; March 22, 2023
 
+
+######################################
+######################################
+###### CALCULATING TOTAL COUNTS ######
+######################################
+######################################
+#### |  COL1  |  COL2  |  COL3  | ####
+#### |   V1   |   V3   |   V6   | ####
+#### |   V2   |   V4   |   V5   | ####
+######################################
+######################################
+## Sum of counts for COL1 and COL2 ###
+####### |  COL1   |  COL2   |  #######
+####### |  V1+V2  |  V3+V4  |  #######
+######################################
+######################################
+
+
 ## TotalCounts.sh : Bash scipt for calculatiing total counts.
 ## This scripts takes a tab seperated file and relavent column names as input.
 ## It then subsets each file to include only the specified columns and then add all the rows for each column. This is then saved in a temp file. A new row is added for each file.
@@ -18,8 +36,7 @@
 ## Column names as the first row of the file
 ## Colnames in the same order as specified in the -c flag of TotalCounts.sh
 
-## bash TotalCounts.sh -f 'SuRE_file.txt.gz' -c 'iPCR cDNA1 cDNA2' -o outfile.txt
-## bash TotalCounts.sh -f 'SuRE_chr1.txt.gz SuRE_chr2.txt.gz ....' -c 'iPCR cDNA1 cDNA2' -o outfile.txt
+## bash TotalCounts.sh -f 'Input.txt.gz' -c 'COL1 COL2 COL3' -o Output.txt
 
 OPTIND=1         
 
@@ -38,7 +55,7 @@ usage() {
   exit 1;
 }
 # Opts
-while getopts "?:h:C:f:c:o:" opt; do
+while getopts "?:h:f:c:o:" opt; do
   case $opt in
     f)
       file+=("$OPTARG");
@@ -70,6 +87,15 @@ else
     echo "$outdir directory does not exists, now it is created."
 fi
 
+
+ # https://dev.to/meleu/how-to-join-array-elements-in-a-bash-script-303a
+ # First argument is delimiter to be seperated with, all the other arguments are 
+ # entries to be joined by the first argument. d and f will exist only locally, and
+ # when unset would become null. Shift the list of argument by 2, skipping $1 and $2
+ # which are now $d and $f respectively. Write $2, then $1, then for all ${@}, $# will
+ # first add $d ( delimiter ) before all the variable in $@ - $3,$4 ....
+ # $@ expands positional argument with just a space , rather than IFS in case of $*
+ # $# defines the pattern to be replaced only if the variable starts with the pattern
 function join_by {
   local d=${1-} f=${2-}
   if shift 2; then

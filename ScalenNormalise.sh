@@ -18,7 +18,7 @@
 ##############################################
 ##############################################
 ##### To scale and normalise enrichment ######
-######### for each fragment i we do, #########
+######## For each fragment i we do, ##########
 ## Fragment |          cDNA-1        | .... ##
 ##          |  cDNA-1-i * Total_iPCR | .... ##
 ##    i     |  --------------------- | .... ##
@@ -62,7 +62,7 @@ prefix=ipcr.norm.sum
 # Usage 
 USAGE=
 usage() {
-  echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:i:s:p:t:o:"
+  echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:i:s:t:o:"
   echo >&2 "OPTIONS:"
   echo >&2 "  -f: Tab seperated file, gzip format .gz [required]"
   echo >&2 "  -c: Names of the cDNA columns [required]"
@@ -76,7 +76,7 @@ usage() {
   exit 1;
 }
 # Opts
-while getopts "?:h:f:c:i:s:t:o:" opt; do
+while getopts ":h:f:c:i:s:t:o:" opt; do
   case $opt in
     f)
       file=$OPTARG;
@@ -107,6 +107,16 @@ while getopts "?:h:f:c:i:s:t:o:" opt; do
 done
 shift $(( OPTIND - 1 ))
 
+
+
+ # https://dev.to/meleu/how-to-join-array-elements-in-a-bash-script-303a
+ # First argument is delimiter to be seperated with, all the other arguments are 
+ # entries to be joined by the first argument. d and f will exist only locally, and
+ # when unset would become null. Shift the list of argument by 2, skipping $1 and $2
+ # which are now $d and $f respectively. Write $2, then $1, then for all ${@}, $# will
+ # first add $d ( delimiter ) before all the variable in $@ - $3,$4 ....
+ # $@ expands positional argument with just a space , rather than IFS in case of $*
+ # $# defines the pattern to be replaced only if the variable starts with the pattern
 function join_by {
   local d=${1-} f=${2-}
   if shift 2; then

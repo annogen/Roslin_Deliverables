@@ -42,7 +42,7 @@
 ## Tab seperated file
 ## Column names as the first row of the file
 
-## bash ExplodeDataframe.sh -f 'SuRE_file.txt.gz' -c 'SNP_ABS_POS SNP_SEQ SNP_PARENT SNP_VAR SNP_TYPE SNP_SUBTYPE SNP_ABS_POS_hg19 SNP_ID' -o outfile.txt.gz
+## bash ExplodeDataframe.sh -f 'Input.txt.gz' -c 'COL1 COL2 COL3' -o Output.txt.gz
 
 
 OPTIND=1         
@@ -52,7 +52,7 @@ SCRIPTNAME="ExplodeDataframe.sh"
 # Usage 
 USAGE=
 usage() {
-  echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:o:"
+  echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:o"
   echo >&2 "OPTIONS:"
   echo >&2 "  -f: Tab seperated file of the format .gz  [required]"
   echo >&2 "  -c: Names of the columns with comma seperated files which have to be exploded [required]"
@@ -62,7 +62,7 @@ usage() {
   exit 1;
 }
 # Opts
-while getopts "?:h:C:f:c:o:" opt; do
+while getopts ":h:f:c:o:" opt; do
   case $opt in
     f)
       file=$OPTARG;
@@ -95,6 +95,14 @@ else
 fi
 
 
+ # https://dev.to/meleu/how-to-join-array-elements-in-a-bash-script-303a
+ # First argument is delimiter to be seperated with, all the other arguments are 
+ # entries to be joined by the first argument. d and f will exist only locally, and
+ # when unset would become null. Shift the list of argument by 2, skipping $1 and $2
+ # which are now $d and $f respectively. Write $2, then $1, then for all ${@}, $# will
+ # first add $d ( delimiter ) before all the variable in $@ - $3,$4 ....
+ # $@ expands positional argument with just a space , rather than IFS in case of $*
+ # $# defines the pattern to be replaced only if the variable starts with the pattern
 function join_by {
   local d=${1-} f=${2-}
   if shift 2; then
