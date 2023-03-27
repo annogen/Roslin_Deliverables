@@ -24,9 +24,9 @@
 
 ## ExplodeDataframe.sh : Bash scipt for exploding dataframe
 ## The script required tab seperated file and list of columns which need to be exploded.
-## This script first determine the column numbers using the column names specified for exploding.
+## This script first determine the column numbers for the column names specified for exploding.
 ## It then splits the dataframe into rows which have to be exploded and which need no exploding.
-## Then, it iteratively goes through all the columns which have to be exploded and do it for each rows.
+## Then, it iteratively goes through all the columns which have to be exploded and does it for each row.
 ## Lastly, it joins the exploded dataframe with the data frame which need no exploding and finaly removes duplicates.
 
 ## An assumption for such explosion is that the comma seprated entries in each row are the same, 
