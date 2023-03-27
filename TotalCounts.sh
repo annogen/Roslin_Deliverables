@@ -36,7 +36,7 @@
 ## Column names as the first row of the file
 ## Colnames in the same order as specified in the -c flag of TotalCounts.sh
 
-## bash TotalCounts.sh -f 'Input.txt.gz' -c 'COL1 COL2 COL3' -o Output.txt
+## bash TotalCounts.sh -f 'Input.txt.gz' -c 'COL1 COL2' -o Output.txt
 
 OPTIND=1         
 
