@@ -12,7 +12,7 @@
 #    i     | iPCR-i |  cDNA-1-i | cDNA-2-i ..#
 ##############################################
 ##############################################
-##### For library, we have total counts ######
+#### For library, we have Total.Count.txt ####
 #    iPCR    |    cDNA-1    |    cDNA-2 ..   #
 # Total_iPCR | Total_cDNA-1 | Total_cDNA-1 ..#
 ##############################################
@@ -49,7 +49,7 @@
 ## Column names as the first row of the file, with extra column added.
 ## The names of the column would have a prefix ( deafult - =ipcr.norm.sum ) and would resemble the cDNA names
 
-## bash ScalenNormalise.sh -f Input.txt.gz -i 'COL4' -c 'COL1 COL2' -s 'COL3' -o Output.txt.gx -t Total.Count.txt
+## bash ScalenNormalise.sh -f Input.txt.gz -i 'iPCR' -c 'cDNA-1 cDNA-2' -s 'COL3' -o Output.txt.gx -t Total.Count.txt
 
 
 OPTIND=1         
