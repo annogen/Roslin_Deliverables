@@ -9,7 +9,22 @@
 ##############################################
 ######## For each fragment i, we have ########
 # Fragment | iPCR   |   cDNA-1  |  cDNA-2 .. #
-#    i     | iPCR-i | cDNA-1 -i | cDNA-2-i ..#
+#    i     | iPCR-i |  cDNA-1-i | cDNA-2-i ..#
+##############################################
+##############################################
+##### For library, we have total counts ######
+#    iPCR    |    cDNA-1    |    cDNA-2 ..   #
+# Total_iPCR | Total_cDNA-1 | Total_cDNA-1 ..#
+##############################################
+##############################################
+##### To scale and normalise enrichment ######
+######### for each fragment i we do, #########
+## Fragment |          cDNA-1        | .... ##
+##          |  cDNA-1-i * Total_iPCR | .... ##
+##    i     |  --------------------- | .... ##
+##          |  iPCR-i * Total_cDNA-1 | .... ##
+##############################################
+##############################################
 ##############################################
 ##############################################
 
@@ -18,8 +33,21 @@
 ## This script requires a file with total counts across all chromosomes ( total counts - iPCR and cDNA ), 
 ## column name of the cDNA samples, column name of the iPCR sample, column name of the SNP position field,
 ## and a tab seperated file with all the columns specified above.
-## 
+## This script first subsets the tab seperated file to only include fragments with mutations. this computation easy
+## as the complexity of the scipt is directly proportional to the number of rows in the tab seperated input file O(n)
+## Then it calculates a multiplication factor which is total iPCR / total cDNA for each cDNA replicate/sample.
+## This makes the whole process of normalising and scaling easier. Then the script divides cDNA by iPCR for each fragment,
+## and multiplies the multiplication factor, in the end , resulting in a formula (cDNA-k-i/iPCR-i) * (Total_cDNA-k/Total_iPCR).
 
+## Input File Format:
+## Tab seperated file
+## Column names as the first row of the file
+## Colnames specified in the -c flag of ScalenNormalise.sh must exist is all files specified under -f
+
+## Output File Format:
+## Tab seperated file
+## Column names as the first row of the file, with extra column added.
+## The names of the column would have a prefix ( deafult - =ipcr.norm.sum ) and would resemble the cDNA names
 
 ## bash ScalenNormalise.sh -f 'exploded.file.txt.gz' -i 'count' -c 'cDNA1 cDNA2' -s 'SNP_ABS_POS' -o norm.out.txt.gz -t total.count.txt
 
@@ -36,7 +64,7 @@ USAGE=
 usage() {
   echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:i:s:p:t:o:"
   echo >&2 "OPTIONS:"
-  echo >&2 "  -f: SuRE Count file of the format .gz [required]"
+  echo >&2 "  -f: Tab seperated file, gzip format .gz [required]"
   echo >&2 "  -c: Names of the cDNA columns [required]"
   echo >&2 "  -i: Names of the iPCR column [required]"
   echo >&2 "  -s: Names of the SNP position column [required]"
