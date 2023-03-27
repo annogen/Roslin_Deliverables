@@ -33,8 +33,8 @@
 ## This script requires a file with total counts across all chromosomes ( total counts - iPCR and cDNA ), 
 ## column name of the cDNA samples, column name of the iPCR sample, column name of the SNP position field,
 ## and a tab seperated file with all the columns specified above.
-## This script first subsets the tab seperated file to only include fragments with mutations. this computation easy
-## as the complexity of the scipt is directly proportional to the number of rows in the tab seperated input file O(n)
+## This script first subsets the tab seperated file to only include fragments with mutations. This is computationaly easy
+## as the complexity of the script is directly proportional to the number of rows in the tab seperated input file O(n)
 ## Then it calculates a multiplication factor which is total iPCR / total cDNA for each cDNA replicate/sample.
 ## This makes the whole process of normalising and scaling easier. Then the script divides cDNA by iPCR for each fragment,
 ## and multiplies the multiplication factor, in the end , resulting in a formula (cDNA-k-i/iPCR-i) * (Total_cDNA-k/Total_iPCR).
