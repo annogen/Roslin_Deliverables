@@ -49,7 +49,7 @@
 ## Column names as the first row of the file, with extra column added.
 ## The names of the column would have a prefix ( deafult - =ipcr.norm.sum ) and would resemble the cDNA names
 
-## bash ScalenNormalise.sh -f 'exploded.file.txt.gz' -i 'count' -c 'cDNA1 cDNA2' -s 'SNP_ABS_POS' -o norm.out.txt.gz -t total.count.txt
+## bash ScalenNormalise.sh -f Input.txt.gz -i 'COL4' -c 'COL1 COL2' -s 'COL3' -o Output.txt.gx -t Total.Count.txt
 
 
 OPTIND=1         
