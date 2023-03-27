@@ -3,7 +3,7 @@
 # Vartika Bisht; March 22, 2023
 
 ## TotalCounts.sh : Bash scipt for calculatiing total counts.
-## This scripts takes counts tables and relavent column names as input.
+## This scripts takes a tab seperated file and relavent column names as input.
 ## It then subsets each file to include only the specified columns and then add all the rows for each column. This is then saved in a temp file. A new row is added for each file.
 ## Finally, you sum all columns in the temp file and write it as a tab seperated file.
 
@@ -11,13 +11,14 @@
 ## Tab seperated file
 ## Column names as the first row of the file
 ## Colnames specified in the -c flag of TotalCounts.sh must exist is all files specified under -f
+## You can provide chromosome wise input or a combined dataframe with all chomosome.
 
 ## Output File Format:
 ## Tab seperated file
 ## Column names as the first row of the file
 ## Colnames in the same order as specified in the -c flag of TotalCounts.sh
 
-## bash TotalCounts.sh -f '/HDD/data2/scratch/vartika/projects/VB221020_HLHS_GDG11_X57/SuRE-IndelPipelineOutput-X57-221207/filtered_counts_table/15_final_counts_EMP/chr22.txt.gz /HDD/data2/scratch/vartika/projects/VB221020_HLHS_GDG11_X57/SuRE-IndelPipelineOutput-X57-221207/filtered_counts_table/15_final_counts_EMP/chr21.txt.gz' -c 'count X57_AC16_220726_A X57_AC16_220726_B' -o outfile.txt
+## bash TotalCounts.sh -f 'SuRE_file.txt.gz' -c 'iPCR cDNA1 cDNA2' -o outfile.txt
 
 OPTIND=1         
 
@@ -26,9 +27,9 @@ SCRIPTNAME="TotalCounts.sh"
 # Usage 
 USAGE=
 usage() {
-  echo >&2 "usage: ${SCRIPTNAME} -s:v:st:en:l:t:C:p:n:o:R:"
+  echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:o:"
   echo >&2 "OPTIONS:"
-  echo >&2 "  -f: SuRE Counts file of the format .gz [required]"
+  echo >&2 "  -f: Tab seperated file of the format .gz [required]"
   echo >&2 "  -c: Names of the column for total counts calculation [required]"
   echo >&2 "  -o: output file [required]"
   echo >&2 "  -h: print this message"
@@ -81,8 +82,7 @@ header=$(IFS=, ; echo "${colname_array[*]}")
 temp=$TMP/outfile.txt
 echo $header > $temp
 
-# Iterate through all the files, sum the column of interest, add the values to the temp file
-## TODO: Parallelise this for loop over files ##
+# Iterate through all the files, sum the column of interest, add the values to the temp file.
 for f in $file
 do
   echo processing file $(basename $f) ..
