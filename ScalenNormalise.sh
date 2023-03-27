@@ -2,14 +2,31 @@
 # AUTHOR / DATE
 # Vartika Bisht; March 22, 2023
 
+##############################################
+##############################################
+########### SCALING AND NORALISING ###########
+##############################################
+##############################################
+######## For each fragment i, we have ########
+# Fragment | iPCR   |   cDNA-1  |  cDNA-2 .. #
+#    i     | iPCR-i | cDNA-1 -i | cDNA-2-i ..#
+##############################################
+##############################################
 
 
-## bash Normalisation.sh -f 'outfile.txt.gz' -i 'count' -c 'X57_AC16_220726_A X57_AC16_220726_B' -s 'SNP_ABS_POS_hg19' -o norm.out.txt.gz -t SuRE_X57_TC.txt
+## Normalisation.sh : Bash scipt for normalising 
+## This script requires a file with total counts across all chromosomes ( total counts - iPCR and cDNA ), 
+## column name of the cDNA samples, column name of the iPCR sample, column name of the SNP position field,
+## and a tab seperated file with all the columns specified above.
+## 
+
+
+## bash ScalenNormalise.sh -f 'exploded.file.txt.gz' -i 'count' -c 'cDNA1 cDNA2' -s 'SNP_ABS_POS' -o norm.out.txt.gz -t total.count.txt
 
 
 OPTIND=1         
 
-SCRIPTNAME="Normalisation.sh"
+SCRIPTNAME="ScalenNormalise.sh"
 
 #Default
 prefix=ipcr.norm.sum
