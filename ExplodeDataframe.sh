@@ -2,23 +2,47 @@
 # AUTHOR / DATE
 # Vartika Bisht; March 22, 2023
 
+
+######################################
+######################################
+######## EXPLODING DATAFRAMES ########
+######################################
+######################################
+######### Original DataFrame #########
+#### |  COL1  |  COL2  |  COL3  | ####
+#### |  V1,V2 |   V3   | V4,V5  | ####
+######################################
+######################################
+######### Exploded DataFrame #########
+#### |  COL1  |  COL2  |  COL3  | ####
+#### |   V1   |   V3   |   V4   | ####
+#### |   V2   |   V3   |   V5   | ####
+######################################
+######################################
+######################################
+######################################
+
 ## ExplodeDataframe.sh : Bash scipt for exploding dataframe
+## The script required tab seperated file and list of columns which need to be exploded.
 ## This script first determine the column numbers using the column names specified for exploding.
 ## It then splits the dataframe into rows which have to be exploded and which need no exploding.
 ## Then, it iteratively goes through all the columns which have to be exploded and do it for each rows.
 ## Lastly, it joins the exploded dataframe with the data frame which need no exploding and finaly removes duplicates.
 
+## An assumption for such explosion is that the comma seprated entries in each row are the same, 
+## i.e , the length of the comma seprated list for all columns in a row is same. ( as shown above)
+## i.e , in the above example : number of elements in COL1 - V1,V2 anf COL2 - V4,V5 must be same.
+
 ## Input File Format:
 ## Tab seperated file
 ## Column names as the first row of the file
-## Colnames specified in the -c flag of TotalCounts.sh must exist is all files specified under -f
+## Colnames specified in the -c flag of ExplodeDataframe.sh must exist is all files specified under -f
 
 ## Output File Format:
 ## Tab seperated file
 ## Column names as the first row of the file
 
-
-## bash ExplodeDataframe.sh -f '/HDD/data2/scratch/vartika/projects/VB221020_HLHS_GDG11_X57/SuRE-IndelPipelineOutput-X57-221207/filtered_counts_table/15_final_counts_EMP/chr22.txt.gz' -c 'SNP_ABS_POS SNP_SEQ SNP_PARENT SNP_VAR SNP_TYPE SNP_SUBTYPE SNP_ABS_POS_hg19 SNP_ID' -o outfile.txt.gz
+## bash ExplodeDataframe.sh -f 'SuRE_file.txt.gz' -c 'SNP_ABS_POS SNP_SEQ SNP_PARENT SNP_VAR SNP_TYPE SNP_SUBTYPE SNP_ABS_POS_hg19 SNP_ID' -o outfile.txt.gz
 
 
 OPTIND=1         
@@ -30,7 +54,7 @@ USAGE=
 usage() {
   echo >&2 "usage: ${SCRIPTNAME} -?:h:f:c:o:"
   echo >&2 "OPTIONS:"
-  echo >&2 "  -f: SuRE Count file of the format .gz [required]"
+  echo >&2 "  -f: Tab seperated file of the format .gz  [required]"
   echo >&2 "  -c: Names of the columns with comma seperated files which have to be exploded [required]"
   echo >&2 "  -o: output file, in gz format [required]"
   echo >&2 "  -h: print this message"
@@ -121,8 +145,6 @@ awk -vFS="\t" -vOFS="|" '{
         print ""
         }
     }' $TMP/ready_to_explode_commasubset.txt > $TMP/exploded_commasubset.txt
-
-
 
 # Concatenate the exploded subset with the non comma subset
 # Make sure that the relative column numbers are same
