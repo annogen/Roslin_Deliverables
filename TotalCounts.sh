@@ -19,6 +19,7 @@
 ## Colnames in the same order as specified in the -c flag of TotalCounts.sh
 
 ## bash TotalCounts.sh -f 'SuRE_file.txt.gz' -c 'iPCR cDNA1 cDNA2' -o outfile.txt
+## bash TotalCounts.sh -f 'SuRE_chr1.txt.gz SuRE_chr2.txt.gz ....' -c 'iPCR cDNA1 cDNA2' -o outfile.txt
 
 OPTIND=1         
 
