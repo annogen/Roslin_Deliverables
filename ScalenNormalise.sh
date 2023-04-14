@@ -37,7 +37,7 @@
 ## as the complexity of the script is directly proportional to the number of rows in the tab seperated input file O(n)
 ## Then it calculates a multiplication factor which is total iPCR / total cDNA for each cDNA replicate/sample.
 ## This makes the whole process of normalising and scaling easier. Then the script divides cDNA by iPCR for each fragment,
-## and multiplies the multiplication factor, in the end , resulting in a formula (cDNA-k-i/iPCR-i) * (Total_cDNA-k/Total_iPCR).
+## and multiplies the multiplication factor, in the end , resulting in a formula (cDNA-k-i/iPCR-i) * (Total_iPCR/Total_cDNA-k).
 
 ## Input File Format:
 ## Tab seperated file
