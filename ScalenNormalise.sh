@@ -76,7 +76,7 @@ usage() {
   exit 1;
 }
 # Opts
-while getopts ":h:f:c:i:s:t:o:" opt; do
+while getopts "?:h:f:c:i:s:t:o:" opt; do
   case $opt in
     f)
       file=$OPTARG;
